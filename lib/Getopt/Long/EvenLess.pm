@@ -5,7 +5,9 @@ package Getopt::Long::EvenLess;
 
 use 5.010001;
 use strict 'subs', 'vars';
-use warnings; # COMMENT
+# IFUNBUILT
+use warnings;
+# END IFUNBUILT
 
 our @EXPORT   = qw(GetOptions);
 our @EXPORT_OK = qw(GetOptionsFromArray);
