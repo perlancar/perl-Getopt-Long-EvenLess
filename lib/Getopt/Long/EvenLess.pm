@@ -94,7 +94,7 @@ sub GetOptionsFromArray {
             my ($used_name, $val_in_opt) = ($1, $2);
             my $opt = $code_find_opt->($used_name);
             if (!defined($opt)) {
-                push @remaining, $argv->[$i] unless defined($opt);
+                push @remaining, $argv->[$i];
                 next ELEM;
             } elsif (!length($opt)) {
                 next ELEM; # ambiguous
