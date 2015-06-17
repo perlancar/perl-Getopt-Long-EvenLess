@@ -217,7 +217,7 @@ object as its first argument.
 
 =item * does not support hashref as first argument
 
-=item * does not support bool/negation (so you have to declare both C<foo> and C<no-foo> manually)
+=item * does not support bool/negation (no C<foo!>, so you have to declare both C<foo> and C<no-foo> manually)
 
 =back
 
