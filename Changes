@@ -1,5 +1,12 @@
 Revision history for Getopt-Long-EvenLess
 
+0.02    2015-06-17 (PERLANCAR)
+
+	- No functional changes.
+
+	- [dzil] Use DZP:IfBuilt.
+
+
 0.01    2015-06-16 (PERLANCAR)
 
         - First release.
