@@ -1,6 +1,6 @@
 Revision history for Getopt-Long-EvenLess
 
-0.04    2015-06-19 (PERLANCAR) (unreleased)
+0.04    2015-06-19 (PERLANCAR)
 
         - The changes for this release are made to support
           Perinci::CmdLine::Inline.
