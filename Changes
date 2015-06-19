@@ -1,5 +1,16 @@
 Revision history for Getopt-Long-EvenLess
 
+0.04    2015-06-19 (PERLANCAR) (unreleased)
+
+        - The changes for this release are made to support
+          Perinci::CmdLine::Inline.
+
+        - Allow foo=i and foo=f in addition to foo=s.
+
+        - Allow desttype (foo=s@) and ignore it because it doesn't matter for
+          our case.
+
+
 0.03    2015-06-17 (PERLANCAR)
 
 	- No functional changes.
