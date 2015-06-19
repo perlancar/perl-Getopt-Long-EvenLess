@@ -84,6 +84,18 @@ subtest "basics" => sub {
     );
 };
 
+subtest "type" => sub {
+    %r=(); test_getopt(
+        name => 'basics',
+        args => ["foo=s"=>sub{$r{foo}=$_[1]}, "bar=i"=>sub{$r{bar}=$_[1]},"baz=f"=>sub{$r{baz}=$_[1]},
+             ],
+        argv => ["--foo", 1, "--bar", 2, "--baz", 3],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {foo=>1, bar=>2, baz=>3}) },
+        remaining => [],
+    );
+};
+
 subtest "gnu compat" => sub {
     %r=(); test_getopt(
         name => '(1)',

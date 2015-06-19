@@ -33,7 +33,7 @@ sub GetOptionsFromArray {
     my %spec_by_opt_name;
     for (keys %spec) {
         my $orig = $_;
-        s/=s\z//;
+        s/=[fios]\z//;
         s/\|.+//;
         $spec_by_opt_name{$_} = $orig;
     }
@@ -43,7 +43,7 @@ sub GetOptionsFromArray {
         my @candidates;
       OPT_SPEC:
         for my $spec (keys %spec) {
-            $spec =~ s/=s\z//;
+            $spec =~ s/=[fios]\z//;
             my @opts = split /\|/, $spec;
             for my $o (@opts) {
                 next if $short_mode && length($o) > 1;
@@ -102,7 +102,7 @@ sub GetOptionsFromArray {
 
             my $spec = $spec_by_opt_name{$opt};
             # check whether option requires an argument
-            if ($spec =~ /=s\z/) {
+            if ($spec =~ /=[fios]\z/) {
                 if (defined $val_in_opt) {
                     # argument is taken after =
                     if (length $val_in_opt) {
@@ -137,7 +137,7 @@ sub GetOptionsFromArray {
 
                 my $spec = $spec_by_opt_name{$opt};
                 # check whether option requires an argument
-                if ($spec =~ /=s\z/) {
+                if ($spec =~ /=[fios]\z/) {
                     if (length $str) {
                         # argument is taken from $str
                         $code_set_val->($opt, $str);
@@ -202,9 +202,7 @@ Nothing to configure, no different modes of operation.
 
 =item * does not support increment (C<foo+>)
 
-=item * does not support types (only strings are supported)
-
-No type checking
+=item * no type checking (C<foo=i>, C<foo=f>, C<foo=s> all accept any string)
 
 =item * does not support optional value (C<foo:s>), only no value (C<foo>) or required value (C<foo=s>)
 
