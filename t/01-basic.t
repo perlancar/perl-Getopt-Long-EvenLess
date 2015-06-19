@@ -96,6 +96,17 @@ subtest "type" => sub {
     );
 };
 
+subtest "desttype" => sub {
+    %r=(); test_getopt(
+        name => 'basics',
+        args => ['foo=s@'=>sub{$r{foo} //= []; push @{$r{foo}}, $_[1]}],
+        argv => ["--foo", 2, "--foo", 1, "--foo", 3],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {foo=>[2,1,3]}) },
+        remaining => [],
+    );
+};
+
 subtest "gnu compat" => sub {
     %r=(); test_getopt(
         name => '(1)',
