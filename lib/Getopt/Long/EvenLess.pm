@@ -185,7 +185,7 @@ sub GetOptions {
 B<EXPERIMENTAL WORK>.
 
 This module is a reimplementation of L<Getopt::Long>, but with much less
-features. It's an even more stripped down version of L<Getopt::Long::less> and
+features. It's an even more stripped down version of L<Getopt::Long::Less> and
 is perhaps less convenient to use for day-to-day scripting work.
 
 The main goal is minimum amount of code and small startup overhead. This module
