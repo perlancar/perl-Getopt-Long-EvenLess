@@ -3,11 +3,9 @@ package Getopt::Long::EvenLess;
 # DATE
 # VERSION
 
-use 5.010001;
-use strict 'subs', 'vars';
-# IFUNBUILT
-use warnings;
-# END IFUNBUILT
+# let's be minimalistic
+#use strict 'subs', 'vars';
+#use warnings;
 
 our @EXPORT   = qw(GetOptions);
 our @EXPORT_OK = qw(GetOptionsFromArray);
@@ -228,10 +226,10 @@ code to get options:
 
  @ARGV = grep { /^--([^=]+)(=(.*))?/ ? ($opts{$1} = $2 ? $3 : 1, 0) : 1 } @ARGV;
 
-and you're already be able to extract C<--flag> or C<--opt=val> from C<@ARGV>
-but you also lose a lot of stuffs like autoabbreviation, C<--opt val> syntax
-support syntax (which is more common, but requires you specify an option spec),
-custom handler, etc.
+and you're already able to extract C<--flag> or C<--opt=val> from C<@ARGV> but
+you also lose a lot of stuffs like autoabbreviation, C<--opt val> syntax support
+syntax (which is more common, but requires you specify an option spec), custom
+handler, etc.
 
 B<Startup overhead>. Here's a sample startup overhead benchmark:
 

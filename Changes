@@ -1,5 +1,15 @@
 Revision history for Getopt-Long-EvenLess
 
+0.05    2016-10-29 (PERLANCAR)
+
+        - No functional changes.
+
+        - Comment-out usage of 'strict' or 'use 5.010001' for reduced startup
+          overhead.
+
+        - [doc] Mention LOC count against Getopt::Long.
+
+
 0.04    2015-06-19 (PERLANCAR)
 
         - The changes for this release are made to support
