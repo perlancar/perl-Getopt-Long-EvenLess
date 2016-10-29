@@ -184,15 +184,16 @@ sub GetOptions {
 
 B<EXPERIMENTAL WORK>.
 
-This module is a reimplementation of L<Getopt::Long>, but with much less
-features. It's an even more stripped down version of L<Getopt::Long::Less> and
-is perhaps less convenient to use for day-to-day scripting work.
+This module (GLEL for short) is a reimplementation of L<Getopt::Long> (GL for
+short), but with much less features. It's an even more stripped down version of
+L<Getopt::Long::Less> (GLL for short) and is perhaps less convenient to use for
+day-to-day scripting work.
 
 The main goal is minimum amount of code and small startup overhead. This module
 is an experiment of how little code I can use to support the stuffs I usually do
-with Getopt::Long.
+with GL.
 
-Compared to Getopt::Long and Getopt::Long::Less, it:
+Compared to GL and GLL, it:
 
 =over
 
@@ -219,7 +220,20 @@ object as its first argument.
 
 =back
 
-Sample startup overhead benchmark:
+The result?
+
+B<Amount of code>. GLEL is about 175 lines of code, while GL is about 1500.
+Sure, if you I<really> want to be minimalistic, you can use this single line of
+code to get options:
+
+ @ARGV = grep { /^--([^=]+)(=(.*))?/ ? ($opts{$1} = $2 ? $3 : 1, 0) : 1 } @ARGV;
+
+and you're already be able to extract C<--flag> or C<--opt=val> from C<@ARGV>
+but you also lose a lot of stuffs like autoabbreviation, C<--opt val> syntax
+support syntax (which is more common, but requires you specify an option spec),
+custom handler, etc.
+
+B<Startup overhead>. Here's a sample startup overhead benchmark:
 
 # COMMAND: perl devscripts/bench-startup 2>&1
 
