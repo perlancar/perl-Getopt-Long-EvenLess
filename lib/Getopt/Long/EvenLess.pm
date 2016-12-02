@@ -103,13 +103,7 @@ sub GetOptionsFromArray {
             if ($spec =~ /=[fios]\@?\z/) {
                 if (defined $val_in_opt) {
                     # argument is taken after =
-                    if (length $val_in_opt) {
-                        $code_set_val->($opt, $val_in_opt);
-                    } else {
-                        warn "Option $used_name requires an argument\n";
-                        $success = 0;
-                        next ELEM;
-                    }
+                    $code_set_val->($opt, $val_in_opt);
                 } else {
                     if ($i+1 >= @$argv) {
                         # we are the last element
@@ -197,7 +191,8 @@ Compared to GL and GLL, it:
 
 =item * does not have Configure()
 
-Nothing to configure, no different modes of operation.
+Nothing to configure, no different modes of operation. GLEL is equivalent to GL
+in this mode: bundling, no_ignore_case, no_getopt_compat, gnu_compat, permute.
 
 =item * does not support increment (C<foo+>)
 

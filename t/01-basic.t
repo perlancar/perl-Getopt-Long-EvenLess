@@ -120,8 +120,8 @@ subtest "gnu compat" => sub {
         name => '(2)',
         args => ["foo=s"=>sub{$r{foo}=$_[1]}],
         argv => ["--foo=", "y"],
-        success => 0,
-        test_res => sub { is_deeply(\%r, {}) },
+        success => 1,
+        test_res => sub { is_deeply(\%r, {foo=>""}) },
         remaining => ["y"],
     );
 };
