@@ -237,4 +237,6 @@ L<Getopt::Long>
 
 L<Getopt::Long::Less>
 
+If you want I<more> features intead of less, try L<Getopt::Long::More>.
+
 =cut
