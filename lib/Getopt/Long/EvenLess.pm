@@ -10,6 +10,31 @@ package Getopt::Long::EvenLess;
 our @EXPORT   = qw(GetOptions);
 our @EXPORT_OK = qw(GetOptionsFromArray);
 
+my $config = {
+    pass_through => 0,
+};
+
+sub Configure {
+    my $old_config = { %$config };
+
+    if (ref($_[0]) eq 'HASH') {
+        for (keys %{$_[0]}) {
+            $config->{$_} = $_[0]{$_};
+        }
+    } else {
+        for (@_) {
+            if ($_ eq 'pass_through') {
+                $config->{pass_through} = 1;
+            } elsif ($_ eq 'no_pass_through') {
+                $config->{pass_through} = 0;
+            } else {
+                die "Unknown configuration '$_'";
+            }
+        }
+    }
+    $old_config;
+}
+
 sub import {
     my $pkg = shift;
     my $caller = caller;
@@ -57,13 +82,17 @@ sub GetOptionsFromArray {
             }
         }
         if (!@candidates) {
-            warn "Unknown option: $wanted\n";
-            $success = 0;
+            unless ($config->{pass_through}) {
+                warn "Unknown option: $wanted\n";
+                $success = 0;
+            }
             return undef; # means unknown
         } elsif (@candidates > 1) {
-            warn "Option $wanted is ambiguous (" .
-                join(", ", @candidates) . ")\n";
-            $success = 0;
+            unless ($config->{pass_through}) {
+                warn "Option $wanted is ambiguous (" .
+                    join(", ", @candidates) . ")\n";
+                $success = 0;
+            }
             return ''; # means ambiguous
         }
         return $candidates[0];
@@ -92,6 +121,7 @@ sub GetOptionsFromArray {
             my ($used_name, $val_in_opt) = ($1, $2);
             my $opt = $code_find_opt->($used_name);
             if (!defined($opt)) {
+                # unknown option
                 push @remaining, $argv->[$i];
                 next ELEM;
             } elsif (!length($opt)) {
@@ -170,8 +200,6 @@ sub GetOptions {
 1;
 #ABSTRACT: Like Getopt::Long::Less, but with even less features
 
-=for Pod::Coverage .+
-
 =head1 DESCRIPTION
 
 This module (GLEL for short) is a reimplementation of L<Getopt::Long> (GL for
@@ -187,10 +215,16 @@ Compared to GL and GLL, it:
 
 =over
 
-=item * does not have Configure()
+=item * minimum Configure() support
 
-Nothing to configure, no different modes of operation. GLEL is equivalent to GL
-in this mode: bundling, no_ignore_case, no_getopt_compat, gnu_compat, permute.
+Only these configurations are known: pass_through, no_pass_through (default).
+
+GLEL is equivalent to GL in this mode: bundling, no_ignore_case,
+no_getopt_compat, gnu_compat, permute.
+
+No support for configuring via import options e.g.:
+
+ use Getopt::Long qw(:config pass_through);
 
 =item * does not support increment (C<foo+>)
 
@@ -227,6 +261,41 @@ handler, etc.
 B<Startup overhead>. Here's a sample startup overhead benchmark:
 
 # COMMAND: perl devscripts/bench-startup 2>&1
+
+
+=head1 FUNCTIONS
+
+=head2 Configure(@configs | \%config) => hash
+
+Set configuration. Known configurations:
+
+=over
+
+=item * pass_through
+
+Ignore errors (unknown/ambiguous option) and still make GetOptions return true.
+
+=item * no_pass_through (default)
+
+=back
+
+Return old configuration data. To restore old configuration data you can pass it
+back to C<Configure()>, e.g.:
+
+ my $orig_conf = Getopt::Long::EvenLess::Configure("pass_through");
+ # ...
+ Getopt::Long::EvenLess::Configure($orig_conf);
+
+=head2 GetOptions(%spec) => bool
+
+Shortcut for:
+
+ GetOptionsFromArray(\@ARGV, %spec)
+
+=head2 GetOptionsFromArray(\@ary, %spec) => bool
+
+Get (and strip) options from C<@ary>. Return true on success or false on failure
+(unknown option, etc).
 
 
 =head1 SEE ALSO

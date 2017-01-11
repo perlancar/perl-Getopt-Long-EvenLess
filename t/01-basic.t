@@ -51,6 +51,15 @@ subtest "basics" => sub {
         remaining => ["--qux"],
     );
     %r=(); test_getopt(
+        name => 'unknown argument -> not error under pass_through',
+        args => ["bar=s"=>sub{$r{bar}=$_[1]}, "foo=s"=>sub{$r{foo}=$_[1]}],
+        argv => ["--bar", "--val", "--qux"],
+        config => ['pass_through'],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {bar=>"--val"}) },
+        remaining => ["--qux"],
+    );
+    %r=(); test_getopt(
         name => 'unknown argument -> error (2)',
         args => ["bar=s"=>sub{$r{bar}=$_[1]}, "foo=s"=>sub{$r{foo}=$_[1]}],
         argv => ["--qux", "--bar", "--val"],
@@ -71,6 +80,15 @@ subtest "basics" => sub {
         args => ["bar=s"=>sub{$r{bar}=$_[1]}, "baz=s"=>sub{$r{baz}=$_[1]}],
         argv => ["--ba", "--val"],
         success => 0,
+        test_res => sub { is_deeply(\%r, {}) },
+        remaining => ['--val'],
+    );
+    %r=(); test_getopt(
+        name => 'ambiguous prefix -> not error under pass_through',
+        args => ["bar=s"=>sub{$r{bar}=$_[1]}, "baz=s"=>sub{$r{baz}=$_[1]}],
+        argv => ["--ba", "--val"],
+        config => ['pass_through'],
+        success => 1,
         test_res => sub { is_deeply(\%r, {}) },
         remaining => ['--val'],
     );
@@ -173,8 +191,11 @@ sub test_getopt {
 
     subtest $name => sub {
         my @argv = @{ $args{argv} };
+
+        my $save_conf; $save_conf = Getopt::Long::EvenLess::Configure(@{ $args{config} }) if $args{config};
         my $res;
         eval { $res = GetOptionsFromArray(\@argv, @{ $args{args} }) };
+        Getopt::Long::EvenLess::Configure($save_conf) if $save_conf;
 
         if ($args{dies}) {
             ok($@, "dies") or goto RETURN;
