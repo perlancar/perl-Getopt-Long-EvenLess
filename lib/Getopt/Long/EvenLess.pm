@@ -125,6 +125,7 @@ sub GetOptionsFromArray {
                 push @remaining, $argv->[$i];
                 next ELEM;
             } elsif (!length($opt)) {
+                push @remaining, $argv->[$i];
                 next ELEM; # ambiguous
             }
 
@@ -151,11 +152,22 @@ sub GetOptionsFromArray {
         } elsif ($argv->[$i] =~ /\A-(.*)/) {
 
             my $str = $1;
+            my $remaining_pushed;
           SHORT_OPT:
             while ($str =~ s/(.)//) {
                 my $used_name = $1;
-                my $opt = $code_find_opt->($1, 'short');
-                next SHORT_OPT unless defined($opt) && length($opt);
+                my $short_opt = $1;
+                my $opt = $code_find_opt->($short_opt, 'short');
+                if (!defined $opt) {
+                    # unknown short option
+                    push @remaining, "-" unless $remaining_pushed++;
+                    $remaining[-1] .= $short_opt;
+                    next SHORT_OPT;
+                } elsif (!length $opt) {
+                    # ambiguous short option
+                    push @remaining, "-" unless $remaining_pushed++;
+                    $remaining[-1] .= $short_opt;
+                }
 
                 my $spec = $spec_by_opt_name{$opt};
                 # check whether option requires an argument
@@ -167,8 +179,10 @@ sub GetOptionsFromArray {
                     } else {
                         if ($i+1 >= @$argv) {
                             # we are the last element
-                            warn "Option $used_name requires an argument\n";
-                            $success = 0;
+                            unless ($config->{pass_through}) {
+                                warn "Option $used_name requires an argument\n";
+                                $success = 0;
+                            }
                             last ELEM;
                         }
                         # take the next element as argument

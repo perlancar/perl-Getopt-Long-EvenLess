@@ -81,7 +81,7 @@ subtest "basics" => sub {
         argv => ["--ba", "--val"],
         success => 0,
         test_res => sub { is_deeply(\%r, {}) },
-        remaining => ['--val'],
+        remaining => ['--ba', '--val'],
     );
     %r=(); test_getopt(
         name => 'ambiguous prefix -> not error under pass_through',
@@ -90,7 +90,7 @@ subtest "basics" => sub {
         config => ['pass_through'],
         success => 1,
         test_res => sub { is_deeply(\%r, {}) },
-        remaining => ['--val'],
+        remaining => ['--ba', '--val'],
     );
     %r=(); test_getopt(
         name => 'missing required argument -> error',
@@ -176,6 +176,36 @@ subtest "bundling" => sub {
         success => 0,
         test_res => sub { is_deeply(\%r, {bar=>1}) },
         remaining => [],
+    );
+};
+
+subtest "config:pass_through" => sub {
+    %r=(); test_getopt(
+        name => 'unknown long option & argument not consumed',
+        args => ["foo|f=s"=>sub{$r{foo}=$_[1]}],
+        argv => [qw/--bar x y/],
+        config => ['pass_through'],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {}) },
+        remaining => [qw/--bar x y/],
+    );
+    %r=(); test_getopt(
+        name => 'ambiguous long option not consumed',
+        args => ["bar=s"=>sub{$r{bar}=$_[1]}, "baz=s"=>sub{$r{baz}=$_[1]}, ],
+        argv => [qw/--ba x/],
+        config => ['pass_through'],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {}) },
+        remaining => [qw/--ba x/],
+    );
+    %r=(); test_getopt(
+        name => 'unknown short option not consumed',
+        args => ["foo|f=s"=>sub{$r{foo}=$_[1]}],
+        argv => [qw/-g/],
+        config => ['pass_through'],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {}) },
+        remaining => [qw/-g/],
     );
 };
 
