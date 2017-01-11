@@ -247,7 +247,7 @@ object as its first argument.
 
 The result?
 
-B<Amount of code>. GLEL is about 175 lines of code, while GL is about 1500.
+B<Amount of code>. GLEL 0.07 is about 175 lines of code, while GL is about 1500.
 Sure, if you I<really> want to be minimalistic, you can use this single line of
 code to get options:
 
