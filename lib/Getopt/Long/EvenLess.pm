@@ -215,7 +215,7 @@ Compared to GL and GLL, it:
 
 =over
 
-=item * minimum Configure() support
+=item * has minimum Configure() support
 
 Only these configurations are known: pass_through, no_pass_through (default).
 
