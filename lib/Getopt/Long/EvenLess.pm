@@ -174,8 +174,6 @@ sub GetOptions {
 
 =head1 DESCRIPTION
 
-B<EXPERIMENTAL WORK>.
-
 This module (GLEL for short) is a reimplementation of L<Getopt::Long> (GL for
 short), but with much less features. It's an even more stripped down version of
 L<Getopt::Long::Less> (GLL for short) and is perhaps less convenient to use for
