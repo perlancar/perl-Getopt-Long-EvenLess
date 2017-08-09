@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(GetOptionsFromArray);
 
 my $config = {
     pass_through => 0,
+    auto_abbrev => 1,
 };
 
 sub Configure {
@@ -28,6 +29,10 @@ sub Configure {
                 $config->{pass_through} = 1;
             } elsif ($_ eq 'no_pass_through') {
                 $config->{pass_through} = 0;
+            } elsif ($_ eq 'auto_abbrev') {
+                $config->{auto_abbrev} = 1;
+            } elsif ($_ eq 'no_auto_abbrev') {
+                $config->{auto_abbrev} = 0;
             } else {
                 die "Unknown configuration '$_'";
             }
@@ -75,7 +80,7 @@ sub GetOptionsFromArray {
                     # perfect match, we immediately go with this one
                     @candidates = ($opts[0]);
                     last OPT_SPEC;
-                } elsif (index($o, $wanted) == 0) {
+                } elsif ($config->{auto_abbrev} && index($o, $wanted) == 0) {
                     # prefix match, collect candidates first
                     push @candidates, $opts[0];
                     next OPT_SPEC;

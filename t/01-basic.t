@@ -217,6 +217,26 @@ subtest "config:pass_through" => sub {
     );
 };
 
+subtest "config:auto_abbrev" => sub {
+    %r=(); test_getopt(
+        name => 'auto_abbrev=1',
+        args => ["foo=s"=>sub{$r{foo}=$_[1]}],
+        argv => [qw/--fo x/],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {foo=>'x'}) },
+        remaining => [qw//],
+    );
+    %r=(); test_getopt(
+        name => 'auto_abbrev=0',
+        args => ["foo=s"=>sub{$r{foo}=$_[1]}],
+        argv => [qw/--fo x/],
+        config => ['no_auto_abbrev'],
+        success => 0,
+        test_res => sub { is_deeply(\%r, {}) },
+        remaining => [qw/--fo x/],
+    );
+};
+
 sub test_getopt {
     my %args = @_;
 
