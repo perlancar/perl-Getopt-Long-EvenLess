@@ -3,9 +3,10 @@ package Getopt::Long::EvenLess;
 # DATE
 # VERSION
 
-# let's be minimalistic
-#use strict 'subs', 'vars';
-#use warnings;
+# IFUNBUILT
+use strict 'subs', 'vars';
+use warnings;
+# END IFUNBUILT
 
 our @EXPORT   = qw(GetOptions);
 our @EXPORT_OK = qw(GetOptionsFromArray);
