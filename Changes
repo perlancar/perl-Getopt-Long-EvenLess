@@ -1,3 +1,11 @@
+0.111   2017-08-09 (PERLANCAR)
+
+	- Add config: (no_)auto_abbrev.
+
+	- Recognize (but ignore) these configs: no_ignore_case,
+	  no_getopt_compat, gnu_compat, bundling, permute.
+
+
 0.110   2017-08-09 (PERLANCAR)
 
 	- Allow desttype %.
