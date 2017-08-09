@@ -33,6 +33,8 @@ sub Configure {
                 $config->{auto_abbrev} = 1;
             } elsif ($_ eq 'no_auto_abbrev') {
                 $config->{auto_abbrev} = 0;
+            } elsif ($_ =~ /\A(no_ignore_case|no_getopt_compat|gnu_compat|bundling|permute)\z/) {
+                # ignore, already behaves that way
             } else {
                 die "Unknown configuration '$_'";
             }
@@ -296,6 +298,20 @@ Set configuration. Known configurations:
 Ignore errors (unknown/ambiguous option) and still make GetOptions return true.
 
 =item * no_pass_through (default)
+
+=item * no_auto_abbrev
+
+=item * auto_abbrev (default)
+
+=item * no_ignore_case
+
+=item * no_getopt_compat
+
+=item * gnu_compat
+
+=item * bundling
+
+=item * permute
 
 =back
 
