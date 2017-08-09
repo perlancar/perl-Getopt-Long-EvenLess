@@ -57,7 +57,7 @@ sub GetOptionsFromArray {
     my %spec_by_opt_name;
     for (keys %spec) {
         my $orig = $_;
-        s/=[fios]\@?\z//;
+        s/=[fios][@%]?\z//;
         s/\|.+//;
         $spec_by_opt_name{$_} = $orig;
     }
@@ -67,7 +67,7 @@ sub GetOptionsFromArray {
         my @candidates;
       OPT_SPEC:
         for my $spec (keys %spec) {
-            $spec =~ s/=[fios]\@?\z//;
+            $spec =~ s/=[fios][@%]?\z//;
             my @opts = split /\|/, $spec;
             for my $o (@opts) {
                 next if $short_mode && length($o) > 1;
@@ -132,7 +132,7 @@ sub GetOptionsFromArray {
 
             my $spec = $spec_by_opt_name{$opt};
             # check whether option requires an argument
-            if ($spec =~ /=[fios]\@?\z/) {
+            if ($spec =~ /=[fios][@%]?\z/) {
                 if (defined $val_in_opt) {
                     # argument is taken after =
                     $code_set_val->($opt, $val_in_opt);
@@ -172,7 +172,7 @@ sub GetOptionsFromArray {
 
                 my $spec = $spec_by_opt_name{$opt};
                 # check whether option requires an argument
-                if ($spec =~ /=[fios]\@?\z/) {
+                if ($spec =~ /=[fios][@%]?\z/) {
                     if (length $str) {
                         # argument is taken from $str
                         $code_set_val->($opt, $str);

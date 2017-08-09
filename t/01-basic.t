@@ -116,11 +116,19 @@ subtest "type" => sub {
 
 subtest "desttype" => sub {
     %r=(); test_getopt(
-        name => 'basics',
+        name => 'array',
         args => ['foo=s@'=>sub{$r{foo} //= []; push @{$r{foo}}, $_[1]}],
         argv => ["--foo", 2, "--foo", 1, "--foo", 3],
         success => 1,
         test_res => sub { is_deeply(\%r, {foo=>[2,1,3]}) },
+        remaining => [],
+    );
+    %r=(); test_getopt(
+        name => 'hash',
+        args => ['foo=s%'=>sub{$r{foo} //= {}; $_[1] =~ /([^=]+)=(.*)/; $r{foo}{$1} = $2 }],
+        argv => ["--foo", "a=1", "--foo", "b=2", "--foo=c=3"],
+        success => 1,
+        test_res => sub { is_deeply(\%r, {foo=>{a=>1, b=>2, c=>3}}) },
         remaining => [],
     );
 };
