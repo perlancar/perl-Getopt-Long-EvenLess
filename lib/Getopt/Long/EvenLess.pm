@@ -110,9 +110,9 @@ sub GetOptionsFromArray {
         my $name = shift;
 
         my $spec_key = $spec_by_opt_name{$name};
-        my $handler  = $spec{$spec_key};
+        my $destination = $spec{$spec_key};
 
-        $handler->({name=>$name}, @_ ? $_[0] : 1);
+        $destination->({name=>$name}, @_ ? $_[0] : 1);
     };
 
     my $i = -1;
@@ -256,10 +256,10 @@ No support for configuring via import options e.g.:
 
 =item * does not support desttypes (C<foo=s@>)
 
-=item * does not support handler other than coderef (so no C<< "foo=s" => \$scalar >>, C<< "foo=s" => \@ary >>, only C<< "foo=s" => sub { ... } >>)
+=item * does not support destination other than coderef (so no C<< "foo=s" => \$scalar >>, C<< "foo=s" => \@ary >>, no C<< "foo=s" => \%hash >>, only C<< "foo=s" => sub { ... } >>)
 
-Also, in coderef handler, code will get a simple hash instead of a "callback"
-object as its first argument.
+Also, in coderef destination, code will get a simple hash instead of a
+"callback" object as its first argument.
 
 =item * does not support hashref as first argument
 
@@ -278,11 +278,7 @@ code to get options:
 and you're already able to extract C<--flag> or C<--opt=val> from C<@ARGV> but
 you also lose a lot of stuffs like autoabbreviation, C<--opt val> syntax support
 syntax (which is more common, but requires you specify an option spec), custom
-handler, etc.
-
-B<Startup overhead>. Here's a sample startup overhead benchmark:
-
-# COMMAND: perl devscripts/bench-startup 2>&1
+destination, etc.
 
 
 =head1 FUNCTIONS
@@ -341,5 +337,7 @@ L<Getopt::Long>
 L<Getopt::Long::Less>
 
 If you want I<more> features intead of less, try L<Getopt::Long::More>.
+
+Benchmarks in L<Bencher::Scenario::GetoptModules>
 
 =cut
