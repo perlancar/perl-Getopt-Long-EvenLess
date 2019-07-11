@@ -1,4 +1,4 @@
-0.112   2019-02-02 (PERLANCAR)
+0.112   2019-02-02  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -6,7 +6,7 @@
 	  https://github.com/perlancar/perl-Getopt-Long-More/issues/21).
 
 
-0.111   2017-08-09 (PERLANCAR)
+0.111   2017-08-09  Released-By: PERLANCAR
 
 	- Add config: (no_)auto_abbrev.
 
@@ -14,44 +14,44 @@
 	  no_getopt_compat, gnu_compat, bundling, permute.
 
 
-0.110   2017-08-09 (PERLANCAR)
+0.110   2017-08-09  Released-By: PERLANCAR
 
 	- Allow desttype %.
 
 
-0.10    2017-01-11 (PERLANCAR)
+0.10    2017-01-11  Released-By: PERLANCAR
 
 	- [Bugfix] Fixes (pass_through should keep unknown/ambiguous short
 	  options, ambiguous long options should be kept).
 
 
-0.09    2017-01-11 (PERLANCAR)
+0.09    2017-01-11  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Fix grammar.
 
 
-0.08    2017-01-11 (PERLANCAR)
+0.08    2017-01-11  Released-By: PERLANCAR
 
 	- Add configuration: pass_through.
 
 	- Remove experimental label.
 
 
-0.07    2016-12-03 (PERLANCAR)
+0.07    2016-12-03  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Mention Getopt::Long::More.
 
 
-0.06    2016-12-02 (PERLANCAR)
+0.06    2016-12-02  Released-By: PERLANCAR
 
 	- Allow empty value '--name='.
 
 
-0.05    2016-10-29 (PERLANCAR)
+0.05    2016-10-29  Released-By: PERLANCAR
 
         - No functional changes.
 
@@ -61,7 +61,7 @@
         - [doc] Mention LOC count against Getopt::Long.
 
 
-0.04    2015-06-19 (PERLANCAR)
+0.04    2015-06-19  Released-By: PERLANCAR
 
         - The changes for this release are made to support
           Perinci::CmdLine::Inline.
@@ -72,20 +72,20 @@
           our case.
 
 
-0.03    2015-06-17 (PERLANCAR)
+0.03    2015-06-17  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [doc] Wording.
 
 
-0.02    2015-06-17 (PERLANCAR)
+0.02    2015-06-17  Released-By: PERLANCAR
 
 	- No functional changes.
 
 	- [dzil] Use DZP:IfBuilt.
 
 
-0.01    2015-06-16 (PERLANCAR)
+0.01    2015-06-16  Released-By: PERLANCAR
 
         - First release.
